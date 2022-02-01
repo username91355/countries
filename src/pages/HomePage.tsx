@@ -1,28 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {Controls} from "../components/Controls";
-import {List} from "../components/List";
-import {Card} from "../components/Card";
-import {ICountry} from "../App";
-import axios from "axios";
+import React, {useState} from 'react';
+import {Controls} from '../components/Controls';
+import {List} from '../components/List';
+import {Card} from '../components/Card';
+import {ICountry} from '../App';
 
 interface IProps {
     countries: ICountry[]
-    setCounties: (value: ICountry[]) => void
 }
 
-export const HomePage: React.FC<IProps> = props => {
+export const HomePage: React.FC<IProps> = React.memo(props => {
 
-    const {countries, setCounties} = props;
-
-    const [filteredCountry, setFilteredCountry] = useState(countries);
-
-    useEffect(() => {
-        if (!countries.length) {
-            axios
-                .get('https://restcountries.com/v2/all?fields=name,capital,flags,population,region')
-                .then(({data}) => setCounties(data))
-        }
-    }, []);
+    const
+        {countries} = props,
+        [filteredCountry, setFilteredCountry] = useState(countries);
 
     const searchHandler = (search: string, region: string) => {
         let data = [...countries];
@@ -38,38 +28,42 @@ export const HomePage: React.FC<IProps> = props => {
                     .includes(search
                         .toLowerCase()));
         }
-
         setFilteredCountry(data);
     };
 
     return (
         <>
-            <Controls onSearch={searchHandler}/>
-            <List>
-                {filteredCountry.map(i => {
-                    return <Card key={i.name}
-                                 img={i.flags.svg}
-                                 name={i.name}
-                                 info={
-                                     [
-                                         {
-                                             title: 'Capital',
-                                             description: i.capital
-                                         },
-                                         {
-                                             title: 'Region',
-                                             description: i.region
-                                         },
-                                         {
-                                             title: 'Population',
-                                             description: i.population.toLocaleString()
-                                         },
+            {!countries.length
+                ? <div>Loading...</div>
+                : <>
+                    <Controls onSearch={searchHandler}/>
+                    <List>
+                        {filteredCountry.map(i => {
+                            return <Card key={i.name}
+                                         img={i.flags.svg}
+                                         name={i.name}
+                                         info={
+                                             [
+                                                 {
+                                                     title: 'Capital',
+                                                     description: i.capital
+                                                 },
+                                                 {
+                                                     title: 'Region',
+                                                     description: i.region
+                                                 },
+                                                 {
+                                                     title: 'Population',
+                                                     description: i.population.toLocaleString()
+                                                 },
 
 
-                                     ]
-                                 }/>
-                })}
-            </List>
+                                             ]
+                                         }/>
+                        })}
+                    </List>
+                </>}
+
         </>
     );
-};
+});

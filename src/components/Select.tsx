@@ -10,11 +10,6 @@ const options = [
     {label: 'Oceania', value: 'Oceania'},
 ];
 
-type MyOption = { label: string, value: number }
-
-interface IProps {
-}
-
 export const RegionSelect: React.FC<any> = styled(Select).attrs({
     options: options,
     placeholder: 'Filter by Region',
@@ -49,7 +44,7 @@ export const RegionSelect: React.FC<any> = styled(Select).attrs({
                 ? `var(--colors-bg)`
                 : `var(--colors-ui-base)`,
         }),
-        singleValue: (provided, state) => ({
+        singleValue: (provided) => ({
             ...provided,
             color: `var(--color-text)`
         }),

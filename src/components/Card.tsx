@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from 'react-router-dom';
 
 const Wrapper = styled.section`
   border-radius: var(--brad);
@@ -42,17 +42,18 @@ const CardListItem = styled.li`
 interface IProps {
     img: string
     name: string
-    info: { title: string, description: string }[]
+    info: Array<{ title: string, description: string }>
 }
 
 export const Card: React.FC<IProps> = props => {
 
-    const {img, name, info} = props;
-    const navigate = useNavigate();
+    const
+        {img, name, info} = props,
+        navigate = useNavigate();
 
     const cardClickHandler = () => {
         navigate(`/country/${name}`);
-    }
+    };
 
     return (
         <Wrapper onClick={cardClickHandler}>

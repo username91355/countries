@@ -41,7 +41,7 @@ export const Search: React.FC<IProps> = props => {
 
     const searchChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value);
-    }
+    };
 
     return (
         <InputContainer>

@@ -21,11 +21,11 @@ interface IProps {
 
 export const Controls: React.FC<IProps> = props => {
 
-    const {onSearch} = props;
-    const [search, setSearch] = useState<string>('');
-    const [region, setRegion] = useState<{ title: string, value: string } | null>(null);
+    const
+        {onSearch} = props,
+        [search, setSearch] = useState<string>(''),
+        [region, setRegion] = useState<{ title: string, value: string } | null>(null);
 
-    console.log(region)
     useEffect(() => {
         onSearch(search, region
             ? region.value
